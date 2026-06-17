@@ -1,66 +1,76 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import Hero from '@/components/Hero';
+import ProductCard from '@/components/ProductCard';
+import CategoryCard from '@/components/CategoryCard';
+import FeaturesSection from '@/components/FeaturesSection';
+import productsData from '@/data/products.json';
+import Link from 'next/link';
+import './page-styles.css';
 
 export default function Home() {
+  const featuredProducts = productsData.slice(0, 3);
+  
+  const categories = [
+    {
+      id: 'cat1',
+      title: 'Speaker',
+      description: 'Morbi justo sem, venenatis sit amet tortor id, porttitor facilisis metus. Ut scelerisque mauris.',
+      image: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=500&q=80',
+      link: '/products?category=Speakers'
+    },
+    {
+      id: 'cat2',
+      title: 'Accessories',
+      description: 'Morbi justo sem, venenatis sit amet tortor id, porttitor facilisis metus. Ut scelerisque mauris.',
+      image: 'https://images.unsplash.com/photo-1583394838336-acd977736f90?w=500&q=80',
+      link: '/products?category=Accessories'
+    },
+    {
+      id: 'cat3',
+      title: 'Wireless Charger',
+      description: 'Morbi justo sem, venenatis sit amet tortor id, porttitor facilisis metus. Ut scelerisque mauris.',
+      image: 'https://images.unsplash.com/photo-1622445270947-44ff56b11200?w=500&q=80',
+      link: '/products?category=Wireless Charger'
+    }
+  ];
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.js file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="home-page">
+      <Hero />
+      
+      <section className="featured-products container">
+        <div className="section-header">
+          <h2 className="section-title">Featured Products</h2>
+          <Link href="/products" className="btn btn-primary">See All Products</Link>
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+        <div className="product-grid">
+          {featuredProducts.map(product => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      </section>
+
+      <section className="shop-by-category container">
+        <div className="section-header">
+          <h2 className="section-title">Shop By Category</h2>
+          <div className="category-controls">
+            <button className="control-btn" aria-label="Previous">&larr;</button>
+            <button className="control-btn" aria-label="Next">&rarr;</button>
+          </div>
+        </div>
+        <div className="category-grid">
+          {categories.map(category => (
+            <CategoryCard 
+              key={category.id}
+              title={category.title}
+              description={category.description}
+              image={category.image}
+              link={category.link}
             />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          ))}
         </div>
-      </main>
+      </section>
+
+      <FeaturesSection />
     </div>
   );
 }

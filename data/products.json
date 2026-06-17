@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "name": "Earbud Y168A",
+    "category": "Earbuds",
+    "price": 270.00,
+    "image": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&q=80",
+    "description": "High-quality true wireless earbuds with active noise cancellation."
+  },
+  {
+    "id": "2",
+    "name": "Pro X168A",
+    "category": "Headphones",
+    "price": 250.00,
+    "image": "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=500&q=80",
+    "description": "Premium over-ear headphones with exceptional sound clarity."
+  },
+  {
+    "id": "3",
+    "name": "Speaker P168A",
+    "category": "Speakers",
+    "price": 240.00,
+    "image": "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=500&q=80",
+    "description": "Portable bluetooth speaker with deep bass and long battery life."
+  }
+]

@@ -1,0 +1,111 @@
+.product-detail-page {
+  padding-top: var(--space-3xl);
+  padding-bottom: var(--space-3xl);
+}
+
+.product-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3xl);
+  align-items: flex-start;
+}
+
+.product-detail-image-wrapper {
+  background-color: var(--color-card-bg-subtle);
+  border-radius: var(--radius-xl);
+  padding: var(--space-3xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-detail-image {
+  max-width: 100%;
+  height: auto;
+  mix-blend-mode: multiply;
+}
+
+.product-detail-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.category-badge {
+  display: inline-block;
+  background-color: var(--color-primary-light);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: var(--space-md);
+  align-self: flex-start;
+}
+
+.product-detail-title {
+  font-size: 2.5rem;
+  margin-bottom: var(--space-sm);
+}
+
+.product-detail-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: var(--space-xl);
+}
+
+.product-detail-description {
+  margin-bottom: var(--space-2xl);
+  color: var(--color-text-muted);
+  line-height: 1.8;
+}
+
+.product-detail-description p {
+  margin-bottom: var(--space-md);
+}
+
+.product-detail-actions {
+  margin-bottom: var(--space-2xl);
+}
+
+.btn-large {
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  width: 100%;
+  max-width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-success {
+  background-color: #10b981;
+  color: white;
+}
+
+.product-perks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-xl);
+}
+
+.perk {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 0.95rem;
+  color: var(--color-text-main);
+}
+
+.perk-icon {
+  color: var(--color-primary);
+}
+
+@media (max-width: 768px) {
+  .product-detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
