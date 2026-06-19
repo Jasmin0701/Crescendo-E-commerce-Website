@@ -2,12 +2,26 @@
 
 import { useCart } from '@/context/CartContext';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './CartPage.css';
 
 export default function CartPage() {
-  const { cart, removeFromCart, updateQuantity, cartTotal } = useCart();
+  const { cart, removeFromCart, updateQuantity, clearCart, cartTotal } = useCart();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('success') === 'true' || params.get('checkout') === 'success_mock') {
+        alert("Payment successful! Thank you for your order.");
+        clearCart();
+        window.history.replaceState({}, document.title, window.location.pathname);
+      } else if (params.get('canceled') === 'true') {
+        alert("Payment was canceled. You can continue shopping.");
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+    }
+  }, [clearCart]);
 
   const handleCheckout = async () => {
     setIsCheckingOut(true);

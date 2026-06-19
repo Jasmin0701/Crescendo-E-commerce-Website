@@ -35,13 +35,15 @@ export async function POST(request) {
       quantity: item.quantity,
     }));
 
+    const origin = request.headers.get('origin') || request.nextUrl?.origin || 'http://localhost:3000';
+
     // Create Checkout Sessions from body params.
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: lineItems,
       mode: 'payment',
-      success_url: `${request.headers.get('origin')}/?success=true`,
-      cancel_url: `${request.headers.get('origin')}/cart?canceled=true`,
+      success_url: `${origin}/cart?success=true`,
+      cancel_url: `${origin}/cart?canceled=true`,
     });
 
     return NextResponse.json({ url: session.url });
