@@ -11,11 +11,21 @@ export default function LoginPage() {
   const { login } = useAuth();
   const router = useRouter();
 
-  const handleLogin = (e) => {
+  const [error, setError] = useState('');
+
+  const handleLogin = async (e) => {
     e.preventDefault();
+    setError('');
+    
     if (email && password) {
-      login(email, password);
-      router.push('/');
+      const result = await login(email, password);
+      
+      if (result?.error) {
+        setError("Invalid email or password");
+      } else {
+        router.push('/');
+        router.refresh(); // Refresh to update server components with new session
+      }
     }
   };
 
@@ -26,6 +36,7 @@ export default function LoginPage() {
         <p>Log in to access your Crescendo account.</p>
         
         <form onSubmit={handleLogin} className="login-form">
+          {error && <div className="error-message" style={{ color: 'red', marginBottom: '15px' }}>{error}</div>}
           <div className="form-group">
             <label htmlFor="email">Email</label>
             <input 

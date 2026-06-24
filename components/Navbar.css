@@ -72,3 +72,41 @@
   display: flex;
   align-items: center;
 }
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-wrap: wrap;
+    gap: var(--space-md);
+  }
+  
+  .navbar-logo {
+    order: 1;
+    flex: 1;
+  }
+  
+  .navbar-actions {
+    order: 2;
+  }
+  
+  .navbar-links {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+  
+  .auth-actions span {
+    display: none; /* Hide 'Hi, Name' on small screens to save space */
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-links {
+    gap: var(--space-sm);
+  }
+  
+  .navbar-links a {
+    font-size: 0.85rem;
+  }
+}

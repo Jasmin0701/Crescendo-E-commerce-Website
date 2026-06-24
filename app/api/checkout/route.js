@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../auth/[...nextauth]/route";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'dummy_key');
 
@@ -37,6 +39,9 @@ export async function POST(request) {
 
     const origin = request.headers.get('origin') || request.nextUrl?.origin || 'http://localhost:3000';
 
+    // Get the user session to attach to the Stripe checkout
+    const userSession = await getServerSession(authOptions);
+
     // Create Checkout Sessions from body params.
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
@@ -44,6 +49,9 @@ export async function POST(request) {
       mode: 'payment',
       success_url: `${origin}/cart?success=true`,
       cancel_url: `${origin}/cart?canceled=true`,
+      metadata: {
+        userId: userSession?.user?.email || 'guest',
+      }
     });
 
     return NextResponse.json({ url: session.url });

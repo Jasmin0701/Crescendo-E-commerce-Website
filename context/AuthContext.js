@@ -1,48 +1,29 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect } from 'react';
-
-const AuthContext = createContext();
+import { SessionProvider, useSession, signIn, signOut } from "next-auth/react";
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-    try {
-      const savedUser = localStorage.getItem('crescendo_user');
-      if (savedUser) {
-        setUser(JSON.parse(savedUser));
-      }
-    } catch (e) {
-      console.error("Could not load user from localStorage", e);
-    }
-  }, []);
-
-  const login = (email, password) => {
-    // Mock login logic
-    const mockUser = { id: 1, email, name: email.split('@')[0] };
-    setUser(mockUser);
-    localStorage.setItem('crescendo_user', JSON.stringify(mockUser));
-  };
-
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('crescendo_user');
-  };
-
   return (
-    <AuthContext.Provider value={{ user, login, logout, isClient }}>
+    <SessionProvider>
       {children}
-    </AuthContext.Provider>
+    </SessionProvider>
   );
 }
 
 export function useAuth() {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
+  const { data: session, status } = useSession();
+  
+  return {
+    user: session?.user || null,
+    isClient: true,
+    login: async (email, password) => {
+      const result = await signIn('credentials', {
+        redirect: false,
+        email,
+        password
+      });
+      return result;
+    },
+    logout: () => signOut({ callbackUrl: '/' })
+  };
 }
